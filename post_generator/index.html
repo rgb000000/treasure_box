@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>fabric demo</title>
+        <script src="./fabric-3.4.0_min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.3.1.min.js"></script>
+    </head>
+    <body>
+        <h1>fabric Demo</h1>
+        <canvas id="c" width="500" height="600"></canvas>
+    </body>
+    <script>
+
+        // fake data
+        var  post_info = {
+            "imgURL" : "./noodle.jpg",
+            "qrcodeURL": "./qrcode.png",
+            "titleLeft": "扫码分享",
+            "titleRight" : "领取优惠",
+            "itme1": "ice peak 1",
+            "itme2": "ice peak 2",
+            "itme3": "ice peak 3"
+        }
+
+        function draw(post_info){
+            // fabric work        
+            console.log("hello world")
+            var canvas = new fabric.Canvas('c')
+
+            fabric.Image.fromURL(post_info["imgURL"], function(oimg){
+                oimg.scale(2.0).set('flipX', true)
+                oimg.set({
+                    left: 0,
+                    top: 0
+                })
+                canvas.add(oimg)
+                oimg.moveTo(1)
+                console.log(oimg.get('zindex'))
+            })
+
+            fabric.Image.fromURL(post_info["qrcodeURL"], function(oimg){
+                oimg.scale(0.5).set('flipX', true)
+                oimg.set({
+                    left: 500 - oimg.width * 0.5,
+                    top: 400 - oimg.height * 0.5
+                })
+                canvas.add(oimg)
+                oimg.moveTo(2)
+            })
+
+            canvas.add()
+
+            var string1 = new fabric.Text(post_info["itme1"], {
+                fontFamily: 'Comic Sans',
+                top:450,
+                left: 300
+            });
+            canvas.add(string1)
+            string1.moveTo(3)
+
+            var string2 = new fabric.Text(post_info["itme2"], {
+                fontFamily: 'Comic Sans',
+                top:500,
+                left:150
+            });
+            canvas.add(string2)
+            string2.moveTo(3)
+
+            var string3 = new fabric.Text(post_info["itme3"], {
+                fontFamily: 'Comic Sans',
+                top:550
+            });
+            canvas.add(string3)
+            string3.moveTo(3)
+
+            var string4 = new fabric.Text(post_info["titleLeft"], {
+                fontFamily: 'Comic Sans',
+                fontSize: 60,
+                fill: "#FFFFFF",
+                left: 0,
+                top: 0
+            });
+            canvas.add(string4)
+            string4.moveTo(3)
+
+            var string5 = new fabric.Text(post_info["titleRight"], {
+                fontFamily: 'Comic Sans',
+                fontSize: 60,
+                fill: "#FFFFFF",
+                left:  250,
+                top:  60
+            });
+            canvas.add(string5)
+            string5.moveTo(3)
+
+            canvas.preserveObjectStacking = true
+            canvas.renderAll()
+        }
+
+        //ajax request
+        $(document).ready(function(){
+            console.log("ajax post")
+                $.post("xxxxxxxx",
+                {
+                info:"request post info",
+                },
+                function(data,status){
+                    // draw(data)
+                    draw(post_info)
+                });
+        });
+
+
+
+        
+    </script>
+</html>
