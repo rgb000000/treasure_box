@@ -1,5 +1,6 @@
 from math import *
 import numpy as np
+import matplotlib.pyplot as plt
 
 def angle_between(dot1, dot2):
     try:
@@ -72,5 +73,14 @@ def convex(dots):
 
 if __name__ == '__main__':
     dots = [((1,1), 'A'), ((2,2), 'B'), ((3,1), 'C'), ((2,1), 'D'), ((1,-5), 'E'), ((-1,-1), 'F'), ((-10,10), 'H')]
+    for dot in dots:
+        plt.scatter(dot[0][0], dot[0][1])
     result = convex(dots)
     print("result:\n", result)
+    x = []
+    y = []
+    for dot in result:
+        x.append(dot[0][0])
+        y.append(dot[0][1])
+    plt.plot(x, y)
+    plt.show()

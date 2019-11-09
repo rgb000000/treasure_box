@@ -19,36 +19,35 @@ def find(A, idx):
             x.append(A[j])
     return x
 
-def findY(A, idx, x, R):
-    y = []
-    for j in range(len(A)):
-        if idx & (1 << j):
-            y.append(A[j])
-            if check(x, y, R) == False:
-                return False
-    return y
+result = []
+length = []
+def log_result(x, y):
+    length.append(len(x) + len(y))
+    result.append({
+        'x': x.copy(),
+        'y': y.copy()
+    })
 
-def backtrack(A, R):
-    x = []
-    y = []
-    result = []
-    length = []
-    for i in range(2**(len(A))):
-        x = find(A, i)
-        for k in range(2**(len(A))):
-            y = findY(A,k, x, R)
-            if y:
-                result.append({'x':x, 'y':y})
-                length.append(len(x) + len(y))
-                print('x --- ' + str(x))
-                print('y --- ' + str(y))
-                print()
-            y = []
-        x = []
-    print(result[np.array(length).argmax()])
-    print(R)
+def backtrack(n, x, y, A, R):
+    _y = y.copy()
+    if n == len(A):
+        return
+
+    if check(x, _y, R):
+        log_result(x, _y)
+        backtrack(n+1, x, _y, A, R)
+
+    _y.append(A[n])
+    if check(x, _y ,R):
+        log_result(x, _y)
+        backtrack(n+1, x, _y, A, R)
+
 
 if __name__ == '__main__':
-    A = [i for i in range(10)]
-    R = np.array(np.random.rand(len(A),len(A))>=0.5, dtype=np.int)
-    backtrack(A, R)
+    A = [i for i in range(5)]
+    R = np.array(np.random.rand(len(A),len(A))>=0.2, dtype=np.int)
+    for i in range(2**(len(A))):
+        x = find(A, i)
+        backtrack(0, x, [], A, R)
+    print(result[np.array(length).argmax()])
+    print(R)

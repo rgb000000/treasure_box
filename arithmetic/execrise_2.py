@@ -32,11 +32,13 @@ def akmDP(m, n):
                 break
             idx[i] += 1
             val[i] = val[i-1]
-    print(val)
-    print(idx)
+    # print(val)
+    # print(idx)
     return val[m]
 
 
 if __name__ == '__main__':
-	# print(ackermann(2,1))
-	print(akmDP(5,1))
+	print("look up table(ack(3,1)): " + str(ackermann(1,3)))
+	print("DP(ack(3,1)): " + str(akmDP(1,3)))
+	print("look up table(ack(4,1)): " + str(ackermann(2,5)))
+	print("DP(ack(4,1)): " + str(akmDP(2,5)))
